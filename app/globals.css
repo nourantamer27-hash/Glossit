@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 340 100% 97%;
+    --foreground: 340 20% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 340 20% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 340 20% 15%;
+    --primary: 350 65% 35%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 340 60% 92%;
+    --secondary-foreground: 350 65% 35%;
+    --muted: 340 40% 95%;
+    --muted-foreground: 340 10% 45%;
+    --accent: 340 60% 92%;
+    --accent-foreground: 350 65% 35%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 340 30% 88%;
+    --input: 340 30% 88%;
+    --ring: 350 65% 35%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Shimmer / Glitter animations */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+  50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; filter: blur(40px); }
+  50% { opacity: 0.7; filter: blur(60px); }
+}
+
+@keyframes sparkle-drift {
+  0% { transform: translateY(0) translateX(0) scale(0); opacity: 0; }
+  20% { opacity: 1; transform: translateY(-10px) translateX(5px) scale(1); }
+  100% { transform: translateY(-80px) translateX(-10px) scale(0); opacity: 0; }
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    hsl(340, 20%, 15%) 0%,
+    hsl(340, 60%, 55%) 40%,
+    hsl(340, 20%, 15%) 60%,
+    hsl(340, 60%, 55%) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+.shimmer-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.glow-orb {
+  animation: glow-pulse 4s ease-in-out infinite;
+}
+
+.sparkle-particle {
+  animation: float 6s ease-in-out infinite;
+}
