@@ -140,9 +140,7 @@ export function CheckoutForm() {
           <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
             Thank You!
           </h1>
-          <p className="text-muted-foreground leading-relaxed">
-            Your order has been placed successfully. A confirmation email has been sent to <span className="font-medium text-foreground">{email}</span> (or order details logged in console if email not configured). Get ready to glow!
-          </p>
+         <p>Your order has been placed successfully. Get ready to glow!</p>
           <Link
             href="/"
             className="inline-flex items-center justify-center rounded-full bg-primary px-10 py-4 text-sm font-semibold uppercase tracking-widest text-primary-foreground transition-all hover:scale-105"
