@@ -174,11 +174,12 @@ export async function POST(request: NextRequest) {
 
     // Send email via Resend
     const response = await resend.emails.send({
-      from: "Glossit <onboarding@resend.dev>",
-      to: email,
-      subject: "Glossit Order Confirmation",
-      html: emailHTML,
-    })
+  from: "Glossit <onboarding@resend.dev>",
+  to: email,
+  cc: "nourantamer27@gmail.com",
+  subject: "Glossit Order Confirmation",
+  html: emailHTML,
+})
 
     if (response.error) {
       console.error("[v0] Resend error:", response.error)
