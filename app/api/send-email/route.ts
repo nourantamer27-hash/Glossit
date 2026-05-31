@@ -167,7 +167,7 @@ if (!process.env.RESEND_API_KEY) {
     { status: 200 }
   )
 }
-
+    
 try {
   // Send email to customer
   await resend.emails.send({
