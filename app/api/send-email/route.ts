@@ -172,22 +172,23 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Send email via Resend
-    // Send email to customer
-await resend.emails.send({
-  from: "Glossit <onboarding@resend.dev>",
-  to: email,
-  subject: "Glossit Order Confirmation",
-  html: emailHTML,
-})
+try {
+  await resend.emails.send({
+    from: "Glossit <onboarding@resend.dev>",
+    to: email,
+    subject: "Glossit Order Confirmation",
+    html: emailHTML,
+  })
 
-// Send email to admin (you)
-await resend.emails.send({
-  from: "Glossit <onboarding@resend.dev>",
-  to: "nourantamer27@gmail.com",
-  subject: "🛒 New Order Received - Glossit",
-  html: emailHTML,
-})
+  await resend.emails.send({
+    from: "Glossit <onboarding@resend.dev>",
+    to: "nourantamer27@gmail.com",
+    subject: "🛒 New Order Received - Glossit",
+    html: emailHTML,
+  })
+} catch (error) {
+  console.error("[v0] Email failed but order continues:", error)
+}
 
     return NextResponse.json(
       { success: true, message: "Email sent successfully", messageId: response.data?.id },
