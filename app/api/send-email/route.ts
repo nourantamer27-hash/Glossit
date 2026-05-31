@@ -174,7 +174,7 @@ export async function POST(request: NextRequest) {
 
     // Send email via Resend
     const response = await resend.emails.send({
-      from: "Glossit <orders@glossit.app>",
+      from: "Glossit <onboarding@resend.dev>",
       to: email,
       subject: "Glossit Order Confirmation",
       html: emailHTML,
