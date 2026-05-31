@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Build email HTML content
-    const itemsHTML = items
+    const itemsHTML = (items || [])
       .map(
         (item: any) =>
           `<tr>
@@ -63,64 +63,31 @@ export async function POST(request: NextRequest) {
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #333; line-height: 1.6; }
     .container { max-width: 600px; margin: 0 auto; padding: 20px; background: #f9f9f9; }
     .header { text-align: center; padding: 20px 0; border-bottom: 2px solid #f4b8c1; }
-    .logo { height: 50px; margin-bottom: 10px; }
     .section { background: white; margin: 20px 0; padding: 20px; border-radius: 8px; }
-    .section h2 { color: #b43c64; font-size: 18px; margin-top: 0; }
-    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 15px 0; }
-    .info-item { }
-    .info-label { color: #999; font-size: 12px; text-transform: uppercase; }
-    .info-value { font-weight: 500; color: #333; }
-    table { width: 100%; border-collapse: collapse; }
     .summary { background: #f9f9f9; padding: 15px; border-radius: 8px; margin-top: 15px; }
-    .summary-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; }
-    .summary-total { font-weight: bold; font-size: 18px; color: #b43c64; padding-top: 10px; border-top: 1px solid #ddd; }
-    .discount { color: #4caf50; }
-    .footer { text-align: center; padding: 20px; color: #999; font-size: 12px; }
+    .summary-row { display: flex; justify-content: space-between; padding: 8px 0; }
+    .summary-total { font-weight: bold; font-size: 18px; color: #b43c64; border-top: 1px solid #ddd; padding-top: 10px; }
   </style>
 </head>
 <body>
   <div class="container">
+
     <div class="section header">
-      <h1 style="color: #b43c64; margin: 0;">Glossit Order Confirmation</h1>
-      <p style="color: #999; margin: 5px 0 0 0;">Thank you for your order!</p>
+      <h1 style="color: #b43c64;">Glossit Order Confirmation</h1>
+      <p>Thank you for your order!</p>
     </div>
 
     <div class="section">
       <h2>Customer Information</h2>
-      <div class="info-grid">
-        <div class="info-item">
-          <div class="info-label">Name</div>
-          <div class="info-value">${firstName} ${lastName}</div>
-        </div>
-        <div class="info-item">
-          <div class="info-label">Email</div>
-          <div class="info-value">${email}</div>
-        </div>
-      </div>
-      <div class="info-grid">
-        <div class="info-item">
-          <div class="info-label">Address</div>
-          <div class="info-value">${address}</div>
-        </div>
-        <div class="info-item">
-          <div class="info-label">Area</div>
-          <div class="info-value">${area}</div>
-        </div>
-      </div>
-      ${city ? `<div class="info-item"><div class="info-label">City</div><div class="info-value">${city}</div></div>` : ""}
+      <p><strong>${firstName} ${lastName}</strong></p>
+      <p>${email}</p>
+      <p>${address}, ${area}</p>
+      ${city ? `<p>${city}</p>` : ""}
     </div>
 
     <div class="section">
       <h2>Order Details</h2>
-      <table>
-        <thead>
-          <tr style="background: #f0f0f0;">
-            <th style="padding: 12px; text-align: left;">Image</th>
-            <th style="padding: 12px; text-align: left;">Product</th>
-            <th style="padding: 12px; text-align: center;">Qty</th>
-            <th style="padding: 12px; text-align: right;">Price</th>
-          </tr>
-        </thead>
+      <table width="100%">
         <tbody>
           ${itemsHTML}
         </tbody>
@@ -131,11 +98,21 @@ export async function POST(request: NextRequest) {
           <span>Subtotal</span>
           <span>${subtotal} EGP</span>
         </div>
-        ${discount > 0 ? `<div class="summary-row discount"><span>Discount (5%)</span><span>-${discount.toFixed(0)} EGP</span></div>` : ""}
+
+        ${
+          discount > 0
+            ? `<div class="summary-row">
+                <span>Discount</span>
+                <span>-${discount.toFixed(0)} EGP</span>
+              </div>`
+            : ""
+        }
+
         <div class="summary-row">
           <span>Delivery</span>
-          <span>${deliveryFee === 0 ? "Free" : `${deliveryFee} EGP`}</span>
+          <span>${deliveryFee === 0 ? "Free" : deliveryFee + " EGP"}</span>
         </div>
+
         <div class="summary-row summary-total">
           <span>Total</span>
           <span>${finalTotal.toFixed(0)} EGP</span>
@@ -145,55 +122,55 @@ export async function POST(request: NextRequest) {
 
     <div class="section">
       <h2>Payment Method</h2>
-      <p style="margin: 0;"><strong>Cash on Delivery</strong></p>
-      <p style="margin: 5px 0 0 0; color: #999; font-size: 14px;">Pay when your order arrives at your doorstep</p>
+      <p><strong>Cash on Delivery</strong></p>
     </div>
 
-    <div class="footer">
-      <p>Thank you for shopping with Glossit! We&apos;re excited to get your order to you.</p>
-      <p>&copy; ${new Date().getFullYear()} Glossit. All rights reserved.</p>
-    </div>
   </div>
 </body>
 </html>
     `.trim()
 
-if (!process.env.RESEND_API_KEY) {
-  return NextResponse.json(
-    {
-      success: true,
-      message: "Order placed but email not configured",
-    },
-    { status: 200 }
-  )
+    if (!process.env.RESEND_API_KEY) {
+      console.warn("Missing RESEND_API_KEY")
+
+      return NextResponse.json(
+        {
+          success: true,
+          message: "Order placed but email not configured",
+        },
+        { status: 200 }
+      )
+    }
+
+    try {
+      await resend.emails.send({
+        from: "Glossit <onboarding@resend.dev>",
+        to: email,
+        subject: "Glossit Order Confirmation",
+        html: emailHTML,
+      })
+
+      await resend.emails.send({
+        from: "Glossit <onboarding@resend.dev>",
+        to: "nourantamer27@gmail.com",
+        subject: "🛒 New Order Received - Glossit",
+        html: emailHTML,
+      })
+    } catch (error) {
+      console.error("[v0] Email failed but order continues:", error)
+    }
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Order placed successfully",
+      },
+      { status: 200 }
+    )
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Server error" },
+      { status: 500 }
+    )
+  }
 }
-    
-try {
-  // Send email to customer
-  await resend.emails.send({
-    from: "Glossit <onboarding@resend.dev>",
-    to: email,
-    subject: "Glossit Order Confirmation",
-    html: emailHTML,
-  })
-
-  // Send email to admin (you)
-  await resend.emails.send({
-    from: "Glossit <onboarding@resend.dev>",
-    to: "nourantamer27@gmail.com",
-    subject: "🛒 New Order Received - Glossit",
-    html: emailHTML,
-  })
-
-} catch (error) {
-  console.error("[v0] Email failed but order continues:", error)
-}
-
-// ALWAYS RETURN SUCCESS
-return NextResponse.json(
-  {
-    success: true,
-    message: "Order placed successfully",
-  },
-  { status: 200 }
-)
