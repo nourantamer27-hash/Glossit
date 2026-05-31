@@ -173,21 +173,21 @@ export async function POST(request: NextRequest) {
     }
 
     // Send email via Resend
-    const response = await resend.emails.send({
+    // Send email to customer
+await resend.emails.send({
   from: "Glossit <onboarding@resend.dev>",
   to: email,
-  cc: "nourantamer27@gmail.com",
   subject: "Glossit Order Confirmation",
   html: emailHTML,
 })
 
-    if (response.error) {
-      console.error("[v0] Resend error:", response.error)
-      return NextResponse.json(
-        { error: "Failed to send email", details: response.error.message },
-        { status: 500 }
-      )
-    }
+// Send email to admin (you)
+await resend.emails.send({
+  from: "Glossit <onboarding@resend.dev>",
+  to: "nourantamer27@gmail.com",
+  subject: "🛒 New Order Received - Glossit",
+  html: emailHTML,
+})
 
     return NextResponse.json(
       { success: true, message: "Email sent successfully", messageId: response.data?.id },
