@@ -158,21 +158,18 @@ export async function POST(request: NextRequest) {
 </html>
     `.trim()
 
-    if (!process.env.RESEND_API_KEY) {
-      console.warn("[v0] RESEND_API_KEY not configured. Set RESEND_API_KEY environment variable.")
-      console.log("[v0] Email would be sent to:", email)
-      console.log("[v0] Order details:", body)
-
-      return NextResponse.json(
-        {
-          success: true,
-          message: "Order confirmation email logged (Resend API key not configured)",
-        },
-        { status: 200 }
-      )
-    }
+if (!process.env.RESEND_API_KEY) {
+  return NextResponse.json(
+    {
+      success: true,
+      message: "Order placed but email not configured",
+    },
+    { status: 200 }
+  )
+}
 
 try {
+  // Send email to customer
   await resend.emails.send({
     from: "Glossit <onboarding@resend.dev>",
     to: email,
@@ -180,26 +177,23 @@ try {
     html: emailHTML,
   })
 
+  // Send email to admin (you)
   await resend.emails.send({
     from: "Glossit <onboarding@resend.dev>",
     to: "nourantamer27@gmail.com",
     subject: "🛒 New Order Received - Glossit",
     html: emailHTML,
   })
+
 } catch (error) {
   console.error("[v0] Email failed but order continues:", error)
 }
 
-    return NextResponse.json(
-      { success: true, message: "Email sent successfully", messageId: response.data?.id },
-      { status: 200 }
-    )
-  } catch (error) {
-    console.error("[v0] Error sending email:", error)
-
-    return NextResponse.json(
-      { error: "Failed to send email", details: String(error) },
-      { status: 500 }
-    )
-  }
-}
+// ALWAYS RETURN SUCCESS
+return NextResponse.json(
+  {
+    success: true,
+    message: "Order placed successfully",
+  },
+  { status: 200 }
+)
