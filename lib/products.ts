@@ -15,6 +15,7 @@ export interface Product {
   name: string
   tagline: string
   price: number
+  originalPrice: number
   shades: Shade[]
   benefits: Benefit[]
 }
@@ -25,6 +26,7 @@ export const products: Product[] = [
     name: "Frostbite",
     tagline: "Clear + icy white shimmer",
     price: 220,
+    originalPrice: 350,
     shades: [
       {
         name: "Frostbite",
@@ -45,6 +47,7 @@ export const products: Product[] = [
     name: "Dark Espresso",
     tagline: "Deep moody brown",
     price: 220,
+    originalPrice: 350,
     shades: [
       {
         name: "Dark Espresso",
@@ -65,6 +68,7 @@ export const products: Product[] = [
     name: "Honeyed Nude",
     tagline: "Warm honey nude",
     price: 220,
+    originalPrice: 350,
     shades: [
       {
         name: "Honeyed Nude",
@@ -85,6 +89,7 @@ export const products: Product[] = [
     name: "Red Flag",
     tagline: "Deep true red",
     price: 220,
+    originalPrice: 350,
     shades: [
       {
         name: "Red Flag",
@@ -105,6 +110,7 @@ export const products: Product[] = [
     name: "Love Blush",
     tagline: "Soft blush pink",
     price: 220,
+    originalPrice: 350,
     shades: [
       {
         name: "Love Blush",
@@ -125,6 +131,7 @@ export const products: Product[] = [
     name: "Delulu",
     tagline: "Clear gloss with subtle sparkle",
     price: 220,
+    originalPrice: 350,
     shades: [
       {
         name: "Delulu",
