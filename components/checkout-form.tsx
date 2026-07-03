@@ -367,7 +367,10 @@ export function CheckoutForm() {
                             <Plus className="h-3 w-3" />
                           </button>
                         </div>
-                        <p className="text-sm font-medium text-foreground">{item.price * item.quantity} EGP</p>
+                        <div className="flex items-center gap-2">
+                          <p className="text-xs line-through text-muted-foreground">{(350 * item.quantity)} EGP</p>
+                          <p className="text-sm font-medium text-foreground">{item.price * item.quantity} EGP</p>
+                        </div>
                       </div>
                     </div>
                     <button

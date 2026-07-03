@@ -78,9 +78,12 @@ export function ProductDetail({ product }: { product: Product }) {
               <p className="text-muted-foreground mt-2">{product.tagline}</p>
             </div>
 
-            <p className="font-serif text-3xl font-bold text-foreground">
-              {product.price} EGP
-            </p>
+            <div className="flex items-center gap-3">
+              <p className="text-lg line-through text-muted-foreground">350 EGP</p>
+              <p className="font-serif text-3xl font-bold text-foreground">
+                {product.price} EGP
+              </p>
+            </div>
 
             {/* Shade Selector */}
             <div>

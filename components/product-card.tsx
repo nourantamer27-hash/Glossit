@@ -44,7 +44,10 @@ export function ProductCard({ product }: { product: Product }) {
       </div>
 
       {/* Price */}
-      <p className="text-lg font-semibold text-foreground">{product.price} EGP</p>
+      <div className="flex items-center gap-2">
+        <p className="text-sm line-through text-muted-foreground">350 EGP</p>
+        <p className="text-lg font-semibold text-foreground">{product.price} EGP</p>
+      </div>
     </Link>
   )
 }
