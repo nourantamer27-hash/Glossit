@@ -15,6 +15,7 @@ export interface Product {
   name: string
   tagline: string
   price: number
+  originalPrice: number
   shades: Shade[]
   benefits: Benefit[]
 }
@@ -25,11 +26,12 @@ export const products: Product[] = [
     name: "Frostbite",
     tagline: "Clear + icy white shimmer",
     price: 220,
+    originalPrice: 350,
     shades: [
       {
         name: "Frostbite",
         color: "#F0E8F5",
-        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Db47bxdgGFBaWaviNFDdOQtvhuR2us.png",
+        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/frostbite-1W7HTxndfIvlKX3mzZohzcmBiqrQ7y.png",
         description: "A crystal-clear gloss with icy white shimmer and cool frosty tones. Luminous, glassy finish with subtle sparkle.",
       },
     ],
@@ -45,11 +47,12 @@ export const products: Product[] = [
     name: "Dark Espresso",
     tagline: "Deep moody brown",
     price: 220,
+    originalPrice: 350,
     shades: [
       {
         name: "Dark Espresso",
         color: "#4A3728",
-        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-R8QZS2GVMq6Lo3HnbvlhSR8fV37hyG.png",
+        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/dark%20espresso-UA3iE24fXJtSV4qH65W6Ne4YYPgcw4.png",
         description: "A rich espresso brown that's moody and luxe. Perfect for an editorial, sophisticated moment.",
       },
     ],
@@ -65,6 +68,7 @@ export const products: Product[] = [
     name: "Honeyed Nude",
     tagline: "Warm honey nude",
     price: 220,
+    originalPrice: 350,
     shades: [
       {
         name: "Honeyed Nude",
@@ -85,11 +89,12 @@ export const products: Product[] = [
     name: "Red Flag",
     tagline: "Deep true red",
     price: 220,
+    originalPrice: 350,
     shades: [
       {
         name: "Red Flag",
         color: "#C41E3A",
-        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-tvIk5wFoYX5l2sWhuh4PQSlFXB378Y.png",
+        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/red%20flag-wKwo7XPFuSKN8PQT5Al8FMxoBAIfyb.png",
         description: "A true red that demands attention. Classic, bold, and impossibly glossy.",
       },
     ],
@@ -105,11 +110,12 @@ export const products: Product[] = [
     name: "Love Blush",
     tagline: "Soft blush pink",
     price: 220,
+    originalPrice: 350,
     shades: [
       {
         name: "Love Blush",
         color: "#F4A8C1",
-        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-3Z5gBqd0KQ0auyNhZuqaCCheGT23VT.png",
+        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/love%20blush-m3YQGceEgGHitwYwcPQ9VataMbmZYs.png",
         description: "A soft blush pink that's playful and feminine. Sweet, dewy, and totally crushable.",
       },
     ],
@@ -125,6 +131,7 @@ export const products: Product[] = [
     name: "Delulu",
     tagline: "Clear gloss with subtle sparkle",
     price: 220,
+    originalPrice: 350,
     shades: [
       {
         name: "Delulu",
